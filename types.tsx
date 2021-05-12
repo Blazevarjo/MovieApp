@@ -5,18 +5,18 @@
 
 export type RootStackParamList = {
   Root: undefined;
-  NotFound: undefined;
+  SignIn: undefined;
 };
 
 export type BottomTabParamList = {
-  TabOne: undefined;
-  TabTwo: undefined;
+  TabAll: undefined;
+  TabFavourites: undefined;
 };
 
-export type TabOneParamList = {
-  TabOneScreen: undefined;
+export type TabAllParamList = {
+  AllMoviesScreen: undefined;
 };
 
-export type TabTwoParamList = {
-  TabTwoScreen: undefined;
+export type TabFavouritesParamList = {
+  FavouriteMoviesScreen: undefined;
 };
