@@ -6,16 +6,17 @@ import firebase from 'firebase';
 import Navigation from './navigation';
 import firebaseConfig from './firebaseConfig';
 import { Theme } from './theme';
+import { AuthContextProvider } from './contexts';
 
 export default function App() {
-  useEffect(() => {
-    firebase.initializeApp(firebaseConfig);
-  }, []);
+  firebase.initializeApp(firebaseConfig);
 
   return (
-    <ThemeProvider theme={Theme}>
-      <Navigation />
-      <StatusBar />
-    </ThemeProvider>
+    <AuthContextProvider>
+      <ThemeProvider theme={Theme}>
+        <Navigation />
+        <StatusBar />
+      </ThemeProvider>
+    </AuthContextProvider>
   );
 }

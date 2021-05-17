@@ -1,20 +1,28 @@
-import React from 'react';
-import {
-  Dimensions,
-  ImageBackground,
-  KeyboardAvoidingView,
-  SafeAreaView,
-  StyleSheet,
-  View,
-} from 'react-native';
+import React, { useEffect } from 'react';
+import { Dimensions, ImageBackground, KeyboardAvoidingView, StyleSheet, View } from 'react-native';
 import { Button, Divider, Text } from 'react-native-paper';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { setStatusBarHidden } from 'expo-status-bar';
 
 import { AuthForm, SocialButtons } from '../components';
-import { useAuthentication } from '../hooks';
+import { AuthStackParamList } from '../types';
 
-export default function SignInScreen() {
+type Props = {
+  navigation: StackNavigationProp<AuthStackParamList, 'SignInScreen'>;
+};
+
+export default function SignInScreen({ navigation }: Props) {
   const height = Dimensions.get('screen').height;
-  const { loginWithFacebook, loginWithGoogle } = useAuthentication();
+
+  useEffect(() => {
+    navigation.addListener('focus', () => {
+      setStatusBarHidden(true, 'fade');
+    });
+    navigation.addListener('blur', () => {
+      setStatusBarHidden(false, 'fade');
+    });
+  }, []);
 
   return (
     <SafeAreaView style={styles.mainContainer}>
@@ -31,12 +39,7 @@ export default function SignInScreen() {
       </View>
       <Divider style={styles.divider} />
       <KeyboardAvoidingView style={styles.socialContainer}>
-        <SocialButtons
-          socials={[
-            { title: 'facebook', onPress: loginWithFacebook },
-            { title: 'google', onPress: loginWithGoogle },
-          ]}
-        />
+        <SocialButtons />
         <View style={styles.registerContainer}>
           <Text style={styles.registerText}>Don’t have an account?</Text>
           <Button
@@ -46,6 +49,7 @@ export default function SignInScreen() {
             icon='arrow-right'
             mode='outlined'
             compact={true}
+            onPress={() => navigation.navigate('RegisterScreen')}
           >
             Register
           </Button>

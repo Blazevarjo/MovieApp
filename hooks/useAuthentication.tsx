@@ -6,6 +6,10 @@ import firebase from 'firebase';
 import { FACEBOOK_APP_ID, GOOGLE_CLIENT_ID } from '../firebaseConfig';
 
 export default function useAuthentication() {
+  const registerWithEmail = async (email: string, password: string) => {
+    firebase.auth().createUserWithEmailAndPassword(email, password);
+  };
+
   const loginWithEmail = async (email: string, password: string) => {
     firebase.auth().signInWithEmailAndPassword(email, password);
   };
@@ -35,5 +39,5 @@ export default function useAuthentication() {
     }
   }, [response]);
 
-  return { loginWithEmail, loginWithFacebook, loginWithGoogle };
+  return { registerWithEmail, loginWithEmail, loginWithFacebook, loginWithGoogle };
 }

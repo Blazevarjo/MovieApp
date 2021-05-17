@@ -3,17 +3,25 @@ import { StyleSheet, View, ViewStyle } from 'react-native';
 import { SocialIcon } from 'react-native-elements';
 import { SocialMediaType } from 'react-native-elements/dist/social/SocialIcon';
 
+import { useAuthentication } from '../hooks';
+
 type Social = {
   title: SocialMediaType;
   onPress: () => void;
 };
 
 type Props = {
-  socials: Array<Social>;
   containerStyle?: ViewStyle;
 };
 
-export default function SocialButtons({ containerStyle, socials }: Props) {
+export default function SocialButtons({ containerStyle }: Props) {
+  const { loginWithFacebook, loginWithGoogle } = useAuthentication();
+
+  const socials: Array<Social> = [
+    { title: 'facebook', onPress: loginWithFacebook },
+    { title: 'google', onPress: loginWithGoogle },
+  ];
+
   return (
     <View style={[styles.container, containerStyle]}>
       {socials.map(({ onPress, title }, index) => (

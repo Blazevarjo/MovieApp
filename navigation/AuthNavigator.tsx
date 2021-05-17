@@ -7,7 +7,7 @@ const AuthStack = createStackNavigator<AuthStackParamList>();
 
 export default function AuthNavigator() {
   return (
-    <AuthStack.Navigator initialRouteName='SignInScreen' headerMode='none'>
+    <AuthStack.Navigator initialRouteName='SignInScreen' screenOptions={{ headerShown: false }}>
       <AuthStack.Screen name='SignInScreen' component={SignInScreen} />
       <AuthStack.Screen name='ResetPasswordScreen' component={ResetPasswordScreen} />
       <AuthStack.Screen name='RegisterScreen' component={RegisterScreen} />

@@ -17,7 +17,7 @@ type Props = {
 };
 
 export default function AuthForm({ type }: Props) {
-  const { loginWithEmail } = useAuthentication();
+  const { loginWithEmail, registerWithEmail } = useAuthentication();
 
   const initValues: LoginValues = { email: '', password: '' };
 
@@ -45,7 +45,7 @@ export default function AuthForm({ type }: Props) {
           if (type === 'login') {
             loginWithEmail(email, password);
           } else if (type === 'register') {
-            console.log('register');
+            registerWithEmail(email, password);
           }
         }}
         validate={validateEmail}
