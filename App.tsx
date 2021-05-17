@@ -1,10 +1,11 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useEffect } from 'react';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { ThemeProvider } from 'react-native-paper';
+import { StatusBar } from 'expo-status-bar';
 import firebase from 'firebase';
 
 import Navigation from './navigation';
 import firebaseConfig from './firebaseConfig';
+import { Theme } from './theme';
 
 export default function App() {
   useEffect(() => {
@@ -12,9 +13,9 @@ export default function App() {
   }, []);
 
   return (
-    <SafeAreaProvider>
+    <ThemeProvider theme={Theme}>
       <Navigation />
       <StatusBar />
-    </SafeAreaProvider>
+    </ThemeProvider>
   );
 }

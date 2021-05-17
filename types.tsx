@@ -5,18 +5,16 @@
 
 export type RootStackParamList = {
   Root: undefined;
-  SignIn: undefined;
+  Auth: undefined;
 };
 
 export type BottomTabParamList = {
-  TabAll: undefined;
-  TabFavourites: undefined;
-};
-
-export type TabAllParamList = {
   AllMoviesScreen: undefined;
+  FavouriteMoviesScreen: undefined;
 };
 
-export type TabFavouritesParamList = {
-  FavouriteMoviesScreen: undefined;
+export type AuthStackParamList = {
+  SignInScreen: undefined;
+  ResetPasswordScreen: undefined;
+  RegisterScreen: undefined;
 };

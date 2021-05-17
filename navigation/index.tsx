@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import { RootStackParamList } from '../types';
 import BottomTabNavigator from './BottomTabNavigator';
-import SignInScreen from '../screens/SignInScreen';
+import AuthNavigator from './AuthNavigator';
 
 export default function Navigation() {
   return (
@@ -18,9 +18,9 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
   return (
-    <Stack.Navigator initialRouteName='SignIn' screenOptions={{ headerShown: false }}>
+    <Stack.Navigator initialRouteName='Auth' screenOptions={{ headerShown: false }}>
+      <Stack.Screen name='Auth' component={AuthNavigator} />
       <Stack.Screen name='Root' component={BottomTabNavigator} />
-      <Stack.Screen name='SignIn' component={SignInScreen} options={{ title: 'Oops!' }} />
     </Stack.Navigator>
   );
 }

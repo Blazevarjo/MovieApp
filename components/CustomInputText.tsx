@@ -85,6 +85,6 @@ export default function CustomInputText({
 
 const styles = StyleSheet.create({
   input: {
-    height: 50,
+    height: 40,
   },
 });
