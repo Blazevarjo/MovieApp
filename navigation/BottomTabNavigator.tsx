@@ -1,6 +1,6 @@
 import React from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useTheme } from 'react-native-paper';
 
 import AllMoviesScreen from '../screens/AllMoviesScreen';
 import FavouriteMoviesScreen from '../screens/FavouriteMoviesScreen';
@@ -9,20 +9,28 @@ import { BottomTabParamList } from '../types';
 const BottomTab = createMaterialBottomTabNavigator<BottomTabParamList>();
 
 export default function BottomTabNavigator() {
+  const colors = useTheme().colors;
   return (
-    <BottomTab.Navigator initialRouteName='AllMoviesScreen'>
+    <BottomTab.Navigator
+      initialRouteName='AllMoviesScreen'
+      barStyle={{ backgroundColor: colors.primary }}
+      activeColor='#FFFFFF'
+      inactiveColor='#006b57'
+    >
       <BottomTab.Screen
         name='AllMoviesScreen'
         component={AllMoviesScreen}
         options={{
-          tabBarIcon: () => <MaterialCommunityIcons name='home' />,
+          tabBarLabel: 'Home',
+          tabBarIcon: 'home',
         }}
       />
       <BottomTab.Screen
         name='FavouriteMoviesScreen'
         component={FavouriteMoviesScreen}
         options={{
-          tabBarIcon: () => <MaterialCommunityIcons name='heart' />,
+          tabBarLabel: 'Favourites',
+          tabBarIcon: 'heart',
         }}
       />
     </BottomTab.Navigator>

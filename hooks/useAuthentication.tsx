@@ -3,11 +3,32 @@ import * as Facebook from 'expo-facebook';
 import * as Google from 'expo-auth-session/providers/google';
 import firebase from 'firebase';
 
-import { FACEBOOK_APP_ID, GOOGLE_CLIENT_ID } from '../firebaseConfig';
+import { FACEBOOK_APP_ID, GOOGLE_CLIENT_ID } from '@env';
 
 export default function useAuthentication() {
+  const initCollection = (userId: string) => {
+    firebase
+      .firestore()
+      .collection('favourites')
+      .doc(userId)
+      .set({
+        movies: [],
+      })
+      .then(() => {
+        console.log('Collection init');
+      });
+  };
+
+  const logout = async () => {
+    await firebase.auth().signOut();
+  };
+
   const registerWithEmail = async (email: string, password: string) => {
-    firebase.auth().createUserWithEmailAndPassword(email, password);
+    const user = await firebase.auth().createUserWithEmailAndPassword(email, password);
+    const userId = user.user?.uid;
+    if (userId) {
+      initCollection(userId);
+    }
   };
 
   const loginWithEmail = async (email: string, password: string) => {
@@ -22,7 +43,11 @@ export default function useAuthentication() {
     });
     if (type === 'success' && token) {
       const facebookCredential = firebase.auth.FacebookAuthProvider.credential(token);
-      firebase.auth().signInWithCredential(facebookCredential);
+      const user = await firebase.auth().signInWithCredential(facebookCredential);
+      const userId = user.user?.uid;
+      if (userId) {
+        initCollection(userId);
+      }
     }
   };
 
@@ -35,9 +60,17 @@ export default function useAuthentication() {
       const { id_token } = response.params;
 
       const credential = firebase.auth.GoogleAuthProvider.credential(id_token);
-      firebase.auth().signInWithCredential(credential);
+      firebase
+        .auth()
+        .signInWithCredential(credential)
+        .then((user) => {
+          const userId = user.user?.uid;
+          if (userId) {
+            initCollection(userId);
+          }
+        });
     }
   }, [response]);
 
-  return { registerWithEmail, loginWithEmail, loginWithFacebook, loginWithGoogle };
+  return { registerWithEmail, loginWithEmail, loginWithFacebook, loginWithGoogle, logout };
 }

@@ -3,37 +3,22 @@ import { FlatList, SafeAreaView } from 'react-native';
 import { fetchPopularMovies, fetchSearchMovies } from '../api';
 
 import { MainAppbar, MovieCard } from '../components';
-import { useMoviesStore } from '../hooks';
 import { Movie } from '../types';
 
-export default function AllMoviesScreen() {
-  const { favouriteMoviesIds, toggleFavourite } = useMoviesStore();
-
+export default function MoviesTemplate() {
   const [movies, setMovies] = useState<Array<Movie>>([]);
 
   useEffect(() => {
     getPopularMovies();
   }, []);
 
-  useEffect(() => {
-    updateMovies(movies);
-  }, [favouriteMoviesIds]);
-
   const getPopularMovies = async () => {
-    const data = await fetchPopularMovies();
-    updateMovies(data);
+    const movies = await fetchPopularMovies();
+    setMovies(movies);
   };
 
   const searchMovies = async (query: string) => {
-    const data = await fetchSearchMovies(query);
-    updateMovies(data);
-  };
-
-  const updateMovies = (data: Array<Movie>) => {
-    const movies = data.map((movie) => {
-      movie.isFavourite = favouriteMoviesIds.includes(movie.id);
-      return movie;
-    });
+    const movies = await fetchSearchMovies(query);
     setMovies(movies);
   };
 
@@ -42,7 +27,7 @@ export default function AllMoviesScreen() {
       <MovieCard
         movie={item}
         onPress={() => console.log(item.poster)}
-        onPressFavourite={() => toggleFavourite(item.id)}
+        onPressFavourite={() => console.log('fav')}
       />
     ),
     []

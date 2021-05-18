@@ -13,6 +13,6 @@ export const Theme = {
   colors: {
     ...DefaultTheme.colors,
     primary: '#05AD8F',
-    primaryDark: '#007d62',
+    primaryDark: '#020202',
   },
 };
